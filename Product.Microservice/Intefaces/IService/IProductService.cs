@@ -10,5 +10,6 @@ namespace Product.Microservice.Intefaces.IService
         ProductResponseModel DeleteProduct(int id);
         ProductResponseModel GetProduct(int id);
         ProductsResponseModel AllProducts();
+       
     }
 }

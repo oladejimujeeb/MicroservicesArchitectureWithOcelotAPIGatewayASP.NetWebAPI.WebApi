@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.Microservice", "Cu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GateWayWebAPI", "GateWayWebAPI\GateWayWebAPI.csproj", "{451E9CC6-3775-4CEE-BAA4-3DDAEBB8E8B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroServices.UnitTest", "MicroServices.UnitTest\MicroServices.UnitTest.csproj", "{73828796-1C2C-4E7D-B031-B244C0F17EE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{451E9CC6-3775-4CEE-BAA4-3DDAEBB8E8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{451E9CC6-3775-4CEE-BAA4-3DDAEBB8E8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{451E9CC6-3775-4CEE-BAA4-3DDAEBB8E8B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73828796-1C2C-4E7D-B031-B244C0F17EE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73828796-1C2C-4E7D-B031-B244C0F17EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73828796-1C2C-4E7D-B031-B244C0F17EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73828796-1C2C-4E7D-B031-B244C0F17EE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

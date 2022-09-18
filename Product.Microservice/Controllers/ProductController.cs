@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Product.Microservice.Intefaces.IService;
 using Product.Microservice.ProductDto;
 using System.Collections;
+using Microsoft.Extensions.Caching.Memory;
+using Product.Microservice.Entity;
 
 namespace Product.Microservice.Controllers
 {
@@ -11,9 +13,14 @@ namespace Product.Microservice.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        public ProductController(IProductService productService)
+        private const string Key = "cache";
+        private readonly IMemoryCache _memoryCache;
+        
+
+        public ProductController(IProductService productService, IMemoryCache memoryCache)
         {
             _productService = productService;
+            _memoryCache = memoryCache;
         }
         [HttpPost]
         public IActionResult AddProduct([FromBody]ProductsDto product)
@@ -26,21 +33,40 @@ namespace Product.Microservice.Controllers
            return BadRequest(add.Message);
         }
         [HttpGet]
-        public ActionResult GetAllProducts()
+        public IActionResult GetAllProducts()
         {
-            var products = _productService.AllProducts();
-            if(products.IsSuccess)
+            ProductsResponseModel products;
+            if (!_memoryCache.TryGetValue(Key, out  products))
             {
-                var result = new ArrayList();
-                result.Add(products.Data);
-                result.Add(products.Message);
+                products = _productService.AllProducts(); //Get the data from database
 
+                var option = new MemoryCacheEntryOptions
+                {
+                    SlidingExpiration = TimeSpan.FromSeconds(90),
+                    //AbsoluteExpiration = DateTime.Now.AddMinutes(5),
+                    Size = 1024,
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3)
+                };
+            
+                _memoryCache.Set(Key, products, option);
                 return Ok(products);
             }
-            return BadRequest(products.Message);
+            Thread.Sleep(2000);
+            return Ok(products);
+            /*
+             if(products.IsSuccess)
+             {
+                 var result = new ArrayList();
+                 result.Add(products.Data);
+                 result.Add(products.Message);
+
+                 return Ok(products);
+             }
+             return BadRequest(products.Message);*/
         }
+
         [HttpGet("{id}", Name="Get")]
-        public ActionResult GetProduct(int id)
+        public IActionResult GetProduct(int id)
         {
             var product = _productService.GetProduct(id);
             if(product.IsSuccess)
